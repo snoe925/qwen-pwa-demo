@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>QuickNotes</title>
+  <meta name="description" content="Offline-first quick notes. Installable PWA, served from GitHub Pages.">
+  <meta name="theme-color" content="#0f172a">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="QuickNotes">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="app-header">
+    <div class="brand">
+      <img src="icons/icon-192.png" alt="" class="brand-icon">
+      <h1>QuickNotes</h1>
+    </div>
+    <div class="header-actions">
+      <span id="status" class="status online">online</span>
+      <button id="install-btn" class="btn install hidden">Install</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="composer card">
+      <textarea id="note-input" placeholder="Jot something down…" rows="3" maxlength="2000"></textarea>
+      <div class="composer-footer">
+        <span id="counter" class="counter">0/2000</span>
+        <button id="add-btn" class="btn primary">Add note</button>
+      </div>
+    </section>
+
+    <section class="notes-section">
+      <div class="section-head">
+        <h2>Your notes</h2>
+        <button id="clear-btn" class="btn ghost hidden">Clear all</button>
+      </div>
+      <ul id="notes-list" class="notes-list"></ul>
+      <p id="empty-state" class="empty-state">Nothing here yet. Your notes are stored on this device and work offline.</p>
+    </section>
+  </main>
+
+  <footer class="app-footer">
+    <p>Works offline · Installable · Powered by GitHub Pages</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

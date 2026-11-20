@@ -28,6 +28,14 @@
   </header>
 
   <main>
+    <section class="game-launch card">
+      <div class="game-launch-text">
+        <h2>Breakout</h2>
+        <p>Smash every brick. One thumb, works offline.</p>
+      </div>
+      <button id="play-breakout" class="btn primary" type="button">Play</button>
+    </section>
+
     <section class="composer card">
       <textarea id="note-input" placeholder="Jot something down…" rows="3" maxlength="2000"></textarea>
       <div class="composer-footer">
@@ -50,6 +58,45 @@
     <p>Works offline · Installable · Powered by GitHub Pages</p>
   </footer>
 
+  <div id="game-overlay" class="game-overlay hidden" role="dialog" aria-modal="true" aria-label="Breakout game">
+    <div class="game-shell">
+      <div class="game-hud">
+        <span class="hud-item">
+          <span class="hud-label">Score</span>
+          <span id="game-score" class="hud-value">0</span>
+        </span>
+        <span class="hud-item">
+          <span class="hud-label">Lives</span>
+          <span id="game-lives" class="hud-value">3</span>
+        </span>
+        <span class="hud-item">
+          <span class="hud-label">Level</span>
+          <span id="game-level" class="hud-value">1</span>
+        </span>
+        <span class="hud-item">
+          <span class="hud-label">Best</span>
+          <span id="game-best" class="hud-value">0</span>
+        </span>
+        <button id="game-exit" class="game-exit" type="button" aria-label="Exit game">×</button>
+      </div>
+
+      <div id="game-stage" class="game-stage">
+        <canvas id="game-canvas" aria-label="Breakout playfield"></canvas>
+        <div id="game-message" class="game-message">
+          <h2 id="game-title">Breakout</h2>
+          <p id="game-subtitle">Drag to move the paddle. Clear every brick and keep the ball alive.</p>
+          <button id="game-action" class="btn primary" type="button">Start</button>
+        </div>
+      </div>
+
+      <div class="game-controls">
+        <button id="game-pause-btn" class="btn" type="button">Pause</button>
+        <button id="game-restart" class="btn" type="button">Restart</button>
+      </div>
+    </div>
+  </div>
+
   <script src="app.js"></script>
+  <script src="game.js"></script>
 </body>
 </html>

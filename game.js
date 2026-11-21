@@ -37,6 +37,8 @@
     best: 0,
     W: 0,
     H: 0,
+    playH: 0,
+    stripH: 0,
     raf: 0,
     last: 0,
     bricks: []
@@ -102,11 +104,13 @@
     const prevH = G.H;
     G.W = W;
     G.H = H;
+    G.stripH = clamp(H * 0.18, 70, 110);
+    G.playH = H - G.stripH;
 
     paddle.w = clamp(W * 0.24, 62, 132);
     paddle.h = clamp(H * 0.024, 10, 16);
-    paddle.y = H - Math.max(28, H * 0.08);
-    ball.r = clamp(Math.min(W, H) * 0.017, 4.5, 8);
+    paddle.y = G.playH - paddle.h - Math.max(14, G.playH * 0.05);
+    ball.r = clamp(Math.min(W, G.playH) * 0.017, 4.5, 8);
 
     if (prevW && prevH) {
       paddle.x = (paddle.x / prevW) * W;
@@ -137,10 +141,10 @@
   function layoutBricks() {
     if (!G.W || !G.H) return;
     const padX = Math.max(8, G.W * 0.03);
-    const top = Math.max(10, G.H * 0.06);
+    const top = Math.max(10, G.playH * 0.06);
     const gap = clamp(G.W * 0.012, 3, 6);
     const brickW = (G.W - padX * 2 - gap * (COLS - 1)) / COLS;
-    const brickH = clamp(G.H * 0.032, 12, 22);
+    const brickH = clamp(G.playH * 0.032, 12, 22);
 
     for (const brick of G.bricks) {
       brick.w = brickW;
@@ -178,7 +182,7 @@
   }
 
   function ballSpeed() {
-    const base = clamp(G.H * 0.62, 230, 620);
+    const base = clamp(G.playH * 0.62, 200, 620);
     return base * (1 + (G.level - 1) * 0.07);
   }
 
@@ -211,7 +215,7 @@
     updateHud();
     G.mode = 'ready';
     pauseBtn.textContent = 'Pause';
-    showMessage('Breakout', 'Drag to move the paddle. Clear every brick and keep the ball alive.', 'Start');
+    showMessage('Breakout', 'Slide your thumb along the strip below the playfield. Tap to launch the ball.', 'Start');
     startLoop();
   }
 
@@ -405,7 +409,7 @@
       break;
     }
 
-    if (ball.y - ball.r > G.H) {
+    if (ball.y - ball.r > G.playH) {
       loseLife();
       return;
     }
@@ -434,11 +438,42 @@
   function draw() {
     const W = G.W;
     const H = G.H;
-    if (!W || !H) return;
+    const playH = G.playH;
+    const stripH = G.stripH;
+    if (!W || !H || !playH) return;
 
     ctx.clearRect(0, 0, W, H);
+
     ctx.fillStyle = '#0b1220';
-    ctx.fillRect(0, 0, W, H);
+    ctx.fillRect(0, 0, W, playH);
+
+    ctx.fillStyle = '#131f36';
+    ctx.fillRect(0, playH, W, stripH);
+    ctx.fillStyle = 'rgba(148, 163, 184, 0.22)';
+    ctx.fillRect(0, playH, W, 1);
+
+    const trackX = 12;
+    const trackW = W - 24;
+    const trackH = stripH * 0.44;
+    const trackY = playH + stripH * 0.18;
+
+    roundRect(trackX, trackY, trackW, trackH, trackH / 2);
+    ctx.fillStyle = 'rgba(148, 163, 184, 0.12)';
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(148, 163, 184, 0.2)';
+    ctx.lineWidth = 1;
+    ctx.stroke();
+
+    const markerW = clamp(paddle.w * 0.62, 30, 66);
+    const markerH = trackH + 8;
+    const markerX = clamp(paddle.x + paddle.w / 2 - markerW / 2, trackX + 1, trackX + trackW - markerW - 1);
+    const markerY = trackY - 4;
+    const markerGradient = ctx.createLinearGradient(markerX, 0, markerX + markerW, 0);
+    markerGradient.addColorStop(0, 'rgba(129, 140, 248, 0.75)');
+    markerGradient.addColorStop(1, 'rgba(192, 132, 252, 0.75)');
+    roundRect(markerX, markerY, markerW, markerH, markerH / 2);
+    ctx.fillStyle = markerGradient;
+    ctx.fill();
 
     for (const brick of G.bricks) {
       if (!brick.alive) continue;
@@ -458,6 +493,9 @@
 
     ctx.save();
     ctx.beginPath();
+    ctx.rect(0, 0, W, playH);
+    ctx.clip();
+    ctx.beginPath();
     ctx.arc(ball.x, ball.y, ball.r, 0, Math.PI * 2);
     ctx.fillStyle = '#e2e8f0';
     ctx.shadowColor = 'rgba(165, 180, 252, 0.85)';
@@ -471,7 +509,11 @@
     if (G.mode === 'ready') {
       ctx.fillStyle = 'rgba(148, 163, 184, 0.95)';
       ctx.font = `600 ${Math.round(clamp(W * 0.04, 12, 17))}px system-ui, -apple-system, sans-serif`;
-      ctx.fillText('Tap to launch', W / 2, Math.max(H * 0.55, paddle.y - 56));
+      ctx.fillText('Tap to launch', W / 2, Math.max(playH * 0.62, paddle.y - 56));
+
+      ctx.fillStyle = 'rgba(148, 163, 184, 0.75)';
+      ctx.font = `600 ${Math.round(clamp(stripH * 0.17, 9, 12))}px system-ui, -apple-system, sans-serif`;
+      ctx.fillText('Slide here to move the paddle', W / 2, playH + stripH * 0.87);
     }
   }
 

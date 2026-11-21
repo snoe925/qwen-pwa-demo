@@ -282,7 +282,8 @@ body.game-open {
   overflow: hidden;
 }
 
-.game-launch {
+.game-launch,
+.tool-launch {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -291,12 +292,14 @@ body.game-open {
   margin-bottom: 14px;
 }
 
-.game-launch h2 {
+.game-launch h2,
+.tool-launch h2 {
   font-size: 1rem;
   font-weight: 700;
 }
 
-.game-launch p {
+.game-launch p,
+.tool-launch p {
   margin-top: 3px;
   font-size: 0.78rem;
   color: var(--text-dim);
@@ -429,4 +432,183 @@ body.game-open {
   .game-hud {
     gap: 12px;
   }
+}
+
+
+/* --- Wave --- */
+
+body.wave-open {
+  overflow: hidden;
+}
+
+.wave-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: calc(env(safe-area-inset-top) + 16px) 16px calc(env(safe-area-inset-bottom) + 16px);
+  background: rgba(2, 6, 23, 0.9);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  overscroll-behavior: contain;
+}
+
+.wave-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  width: 100%;
+  max-width: 420px;
+  margin: auto;
+  padding: 18px;
+}
+
+.wave-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.wave-head h2 {
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
+.wave-readout {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 6px;
+  font-size: 2.4rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+  color: var(--text);
+  transition: color 0.15s ease;
+}
+
+.wave-overlay.wave-on .wave-readout {
+  color: #a5b4fc;
+}
+
+.wave-unit {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-dim);
+}
+
+.wave-waves {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.wave-btn {
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 10px 4px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface-2);
+  color: var(--text-dim);
+  cursor: pointer;
+  transition: transform 0.06s ease, color 0.15s ease;
+}
+
+.wave-btn:active {
+  transform: scale(0.97);
+}
+
+.wave-btn.selected {
+  border-color: transparent;
+  color: #fff;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+}
+
+.wave-slider-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.wave-step {
+  flex: 0 0 44px;
+  padding: 8px 0;
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
+.wave-range {
+  flex: 1;
+  min-width: 0;
+  height: 34px;
+  margin: 0;
+  background: transparent;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.wave-range::-webkit-slider-runnable-track {
+  height: 6px;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  background: var(--surface-2);
+}
+
+.wave-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 24px;
+  height: 24px;
+  margin-top: -9px;
+  border: none;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #818cf8, #c084fc);
+}
+
+.wave-range::-moz-range-track {
+  height: 6px;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  background: var(--surface-2);
+}
+
+.wave-range::-moz-range-thumb {
+  width: 24px;
+  height: 24px;
+  border: none;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #818cf8, #c084fc);
+}
+
+.wave-hint {
+  margin-top: -4px;
+  text-align: center;
+  font-size: 0.75rem;
+  line-height: 1.45;
+  color: var(--text-dim);
+}
+
+.wave-volume-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.wave-label {
+  flex: 0 0 52px;
+  font-size: 0.65rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-dim);
+}
+
+.wave-play {
+  width: 100%;
+  padding: 13px;
+  font-size: 1rem;
 }

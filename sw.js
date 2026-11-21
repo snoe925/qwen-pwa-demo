@@ -1,4 +1,4 @@
-const VERSION = 'v3';
+const VERSION = 'v4';
 const CACHE_NAME = `quicknotes-${VERSION}`;
 
 const BASE = new URL('./', self.location);
@@ -8,6 +8,7 @@ const APP_SHELL = [
   'styles.css',
   'app.js',
   'game.js',
+  'wave.js',
   'manifest.webmanifest',
   'offline.html',
   'icons/icon-192.png',

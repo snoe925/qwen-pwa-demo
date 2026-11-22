@@ -105,37 +105,65 @@
   </div>
 
   <div id="wave-overlay" class="wave-overlay hidden" role="dialog" aria-modal="true" aria-label="Wave generator">
-    <div class="wave-panel card">
+    <div class="wave-shell">
       <div class="wave-head">
-        <h2>Wave</h2>
+        <div class="wave-title">
+          <h2>Wave</h2>
+          <p id="wave-current">Sine · 440 Hz</p>
+        </div>
         <button id="wave-close" class="game-exit" type="button" aria-label="Close wave generator">×</button>
       </div>
 
-      <div class="wave-readout">
-        <span id="wave-freq">440</span>
-        <span class="wave-unit">Hz</span>
+      <div class="wave-body">
+        <div class="wave-readout">
+          <span id="wave-freq">440</span>
+          <span class="wave-unit">Hz</span>
+        </div>
+
+        <div class="wave-group">
+          <div class="wave-row-head">
+            <span class="wave-label">Waveform</span>
+            <span id="wave-wave-name" class="wave-badge">Sine</span>
+          </div>
+          <div class="wave-waves" role="radiogroup" aria-label="Waveform">
+            <button class="wave-btn selected" data-type="sine" type="button" role="radio" aria-checked="true">
+              <span class="wave-dot" aria-hidden="true"></span>Sine
+            </button>
+            <button class="wave-btn" data-type="square" type="button" role="radio" aria-checked="false">
+              <span class="wave-dot" aria-hidden="true"></span>Square
+            </button>
+            <button class="wave-btn" data-type="sawtooth" type="button" role="radio" aria-checked="false">
+              <span class="wave-dot" aria-hidden="true"></span>Sawtooth
+            </button>
+          </div>
+        </div>
+
+        <div class="wave-group">
+          <div class="wave-row-head">
+            <span class="wave-label">Frequency</span>
+            <span id="wave-freq-badge" class="wave-badge">440 Hz</span>
+          </div>
+          <div class="wave-slider-row">
+            <button id="wave-down" class="btn wave-step" type="button" aria-label="Lower frequency">−</button>
+            <input id="wave-range" class="wave-range" type="range" min="0" max="1000" step="1" value="520" aria-label="Frequency">
+            <button id="wave-up" class="btn wave-step" type="button" aria-label="Raise frequency">+</button>
+          </div>
+        </div>
+
+        <div class="wave-group">
+          <div class="wave-row-head">
+            <span class="wave-label">Volume</span>
+            <span id="wave-vol-badge" class="wave-badge">35%</span>
+          </div>
+          <input id="wave-volume" class="wave-range" type="range" min="0" max="100" step="1" value="35" aria-label="Volume">
+        </div>
+
+        <p class="wave-hint">40 Hz to 4 kHz. The − and + buttons step one semitone.</p>
       </div>
 
-      <div class="wave-waves" role="group" aria-label="Waveform">
-        <button class="wave-btn selected" data-type="sine" type="button" aria-pressed="true">Sine</button>
-        <button class="wave-btn" data-type="square" type="button" aria-pressed="false">Square</button>
-        <button class="wave-btn" data-type="sawtooth" type="button" aria-pressed="false">Sawtooth</button>
+      <div class="wave-controls">
+        <button id="wave-toggle" class="btn primary wave-play" type="button">Play</button>
       </div>
-
-      <div class="wave-slider-row">
-        <button id="wave-down" class="btn wave-step" type="button" aria-label="Lower frequency">−</button>
-        <input id="wave-range" class="wave-range" type="range" min="0" max="1000" step="1" value="520" aria-label="Frequency">
-        <button id="wave-up" class="btn wave-step" type="button" aria-label="Raise frequency">+</button>
-      </div>
-
-      <p class="wave-hint">Slide for 40 Hz to 4 kHz. The − and + buttons step one semitone.</p>
-
-      <div class="wave-volume-row">
-        <span class="wave-label">Volume</span>
-        <input id="wave-volume" class="wave-range" type="range" min="0" max="100" step="1" value="35" aria-label="Volume">
-      </div>
-
-      <button id="wave-toggle" class="btn primary wave-play" type="button">Play</button>
     </div>
   </div>
 

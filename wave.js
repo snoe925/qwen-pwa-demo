@@ -9,11 +9,16 @@
   const toggleBtn = document.getElementById('wave-toggle');
   const rangeEl = document.getElementById('wave-range');
   const freqEl = document.getElementById('wave-freq');
+  const freqBadgeEl = document.getElementById('wave-freq-badge');
+  const volBadgeEl = document.getElementById('wave-vol-badge');
+  const waveNameEl = document.getElementById('wave-wave-name');
+  const currentEl = document.getElementById('wave-current');
   const volumeEl = document.getElementById('wave-volume');
   const downBtn = document.getElementById('wave-down');
   const upBtn = document.getElementById('wave-up');
   const waveBtns = Array.prototype.slice.call(overlay.querySelectorAll('.wave-btn'));
 
+  const WAVE_NAMES = { sine: 'Sine', square: 'Square', sawtooth: 'Sawtooth' };
   const MIN_HZ = 40;
   const MAX_HZ = 4000;
   const SLIDER_MAX = 1000;
@@ -45,14 +50,31 @@
     return (clamp(Number(volumeEl.value) || 0, 0, 100) / 100) * MAX_GAIN;
   }
 
-  function setReadout() {
-    freqEl.textContent = String(Math.round(frequency));
+  function updateLabels() {
+    const hz = Math.round(frequency);
+    const name = WAVE_NAMES[waveType] || 'Sine';
+    freqEl.textContent = String(hz);
+    freqBadgeEl.textContent = hz + ' Hz';
+    volBadgeEl.textContent = (Number(volumeEl.value) || 0) + '%';
+    waveNameEl.textContent = name;
+    currentEl.textContent = name + ' · ' + hz + ' Hz';
+  }
+
+  function paintRange(el) {
+    const min = Number(el.min) || 0;
+    const max = Number(el.max) || 100;
+    const value = Number(el.value) || 0;
+    const pct = max > min ? ((value - min) / (max - min)) * 100 : 0;
+    el.style.setProperty('--fill', pct + '%');
   }
 
   function setFrequency(hz, syncSlider) {
     frequency = clamp(hz, MIN_HZ, MAX_HZ);
-    if (syncSlider) rangeEl.value = String(frequencyToSlider(frequency));
-    setReadout();
+    if (syncSlider) {
+      rangeEl.value = String(frequencyToSlider(frequency));
+      paintRange(rangeEl);
+    }
+    updateLabels();
     if (oscillator && audioCtx) {
       oscillator.frequency.setTargetAtTime(frequency, audioCtx.currentTime, 0.015);
     }
@@ -63,9 +85,10 @@
     for (const btn of waveBtns) {
       const on = btn.dataset.type === type;
       btn.classList.toggle('selected', on);
-      btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+      btn.setAttribute('aria-checked', on ? 'true' : 'false');
     }
     if (oscillator) oscillator.type = type;
+    updateLabels();
   }
 
   function setVolume() {
@@ -167,7 +190,9 @@
     document.body.classList.add('wave-open');
     setWaveType(waveType);
     rangeEl.value = String(frequencyToSlider(frequency));
-    setReadout();
+    updateLabels();
+    paintRange(rangeEl);
+    paintRange(volumeEl);
     toggleBtn.textContent = playing ? 'Stop' : 'Play';
   }
 
@@ -191,9 +216,14 @@
 
   rangeEl.addEventListener('input', function () {
     setFrequency(sliderToFrequency(rangeEl.value), false);
+    paintRange(rangeEl);
   });
 
-  volumeEl.addEventListener('input', setVolume);
+  volumeEl.addEventListener('input', function () {
+    setVolume();
+    updateLabels();
+    paintRange(volumeEl);
+  });
 
   for (const btn of waveBtns) {
     btn.addEventListener('click', function () {
@@ -229,5 +259,7 @@
 
   setWaveType(waveType);
   rangeEl.value = String(frequencyToSlider(frequency));
-  setReadout();
+  updateLabels();
+  paintRange(rangeEl);
+  paintRange(volumeEl);
 })();

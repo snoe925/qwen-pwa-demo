@@ -26,6 +26,8 @@ Files: index.html, styles.css, app.js, sw.js, manifest.webmanifest, offline.html
 
 ## Wave generator
 - "Wave" card opens `#wave-overlay`: one `OscillatorNode` (`sine` / `square` / `sawtooth`) into a `GainNode`
+- Full-screen modal built like the game overlay: header with the live "wave · frequency" line and the × button, a scrolling body panel, and Play pinned at the bottom
+- Selection is shown three ways: the chosen waveform button is filled with a white dot, the group header names it, and the header line repeats "wave · Hz"; each slider has a value badge and a filled track
 - Frequency slider is logarithmic (40 Hz – 4 kHz, slider 0–1000) so low notes are not squashed; the −/+ buttons step one semitone
 - AudioContext is created lazily inside the Play tap (iOS requires a gesture), and resumed if iOS suspended or interrupted it; closing the panel or hiding the page stops the tone and suspends the context
 - Gain ramps (30 ms in, 40 ms out) so starting and stopping do not click; peak gain is capped at 0.22

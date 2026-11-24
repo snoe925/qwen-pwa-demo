@@ -109,7 +109,7 @@
       <div class="wave-head">
         <div class="wave-title">
           <h2>Wave</h2>
-          <p id="wave-current">Sine · 440 Hz</p>
+          <p id="wave-current">Sine · 4 voices</p>
         </div>
         <button id="wave-close" class="game-exit" type="button" aria-label="Close wave generator">×</button>
       </div>
@@ -117,7 +117,7 @@
       <div class="wave-body">
         <div class="wave-readout">
           <span id="wave-freq">440</span>
-          <span class="wave-unit">Hz</span>
+          <span class="wave-unit">Hz · root voice</span>
         </div>
 
         <div class="wave-group">
@@ -140,25 +140,67 @@
 
         <div class="wave-group">
           <div class="wave-row-head">
-            <span class="wave-label">Frequency</span>
-            <span id="wave-freq-badge" class="wave-badge">440 Hz</span>
+            <span class="wave-label">Voices</span>
+            <span id="wave-active-badge" class="wave-badge">4 / 4</span>
           </div>
-          <div class="wave-slider-row">
-            <button id="wave-down" class="btn wave-step" type="button" aria-label="Lower frequency">−</button>
-            <input id="wave-range" class="wave-range" type="range" min="0" max="1000" step="1" value="520" aria-label="Frequency">
-            <button id="wave-up" class="btn wave-step" type="button" aria-label="Raise frequency">+</button>
+          <div class="wave-voices" id="wave-voices">
+        <div class="wave-voice" data-voice="0">
+          <div class="wave-voice-row">
+            <span class="wave-voice-note" id="wave-voice-note-0">A4</span>
+            <span class="wave-voice-hz" id="wave-voice-hz-0">440 Hz</span>
+            <div class="wave-voice-steps">
+              <button id="wave-voice-down-0" class="btn wave-step" type="button" aria-label="Lower voice 1 frequency">−</button>
+              <button id="wave-voice-up-0" class="btn wave-step" type="button" aria-label="Raise voice 1 frequency">+</button>
+            </div>
+          </div>
+          <input id="wave-voice-vol-0" class="wave-range wave-voice-vol" type="range" min="0" max="100" step="1" value="100" aria-label="Voice 1 volume">
+        </div>
+        <div class="wave-voice" data-voice="1">
+          <div class="wave-voice-row">
+            <span class="wave-voice-note" id="wave-voice-note-1">A4</span>
+            <span class="wave-voice-hz" id="wave-voice-hz-1">440 Hz</span>
+            <div class="wave-voice-steps">
+              <button id="wave-voice-down-1" class="btn wave-step" type="button" aria-label="Lower voice 2 frequency">−</button>
+              <button id="wave-voice-up-1" class="btn wave-step" type="button" aria-label="Raise voice 2 frequency">+</button>
+            </div>
+          </div>
+          <input id="wave-voice-vol-1" class="wave-range wave-voice-vol" type="range" min="0" max="100" step="1" value="60" aria-label="Voice 2 volume">
+        </div>
+        <div class="wave-voice" data-voice="2">
+          <div class="wave-voice-row">
+            <span class="wave-voice-note" id="wave-voice-note-2">A4</span>
+            <span class="wave-voice-hz" id="wave-voice-hz-2">440 Hz</span>
+            <div class="wave-voice-steps">
+              <button id="wave-voice-down-2" class="btn wave-step" type="button" aria-label="Lower voice 3 frequency">−</button>
+              <button id="wave-voice-up-2" class="btn wave-step" type="button" aria-label="Raise voice 3 frequency">+</button>
+            </div>
+          </div>
+          <input id="wave-voice-vol-2" class="wave-range wave-voice-vol" type="range" min="0" max="100" step="1" value="45" aria-label="Voice 3 volume">
+        </div>
+        <div class="wave-voice" data-voice="3">
+          <div class="wave-voice-row">
+            <span class="wave-voice-note" id="wave-voice-note-3">A4</span>
+            <span class="wave-voice-hz" id="wave-voice-hz-3">440 Hz</span>
+            <div class="wave-voice-steps">
+              <button id="wave-voice-down-3" class="btn wave-step" type="button" aria-label="Lower voice 4 frequency">−</button>
+              <button id="wave-voice-up-3" class="btn wave-step" type="button" aria-label="Raise voice 4 frequency">+</button>
+            </div>
+          </div>
+          <input id="wave-voice-vol-3" class="wave-range wave-voice-vol" type="range" min="0" max="100" step="1" value="32" aria-label="Voice 4 volume">
+        </div>
+
           </div>
         </div>
 
         <div class="wave-group">
           <div class="wave-row-head">
-            <span class="wave-label">Volume</span>
-            <span id="wave-vol-badge" class="wave-badge">35%</span>
+            <span class="wave-label">Master volume</span>
+            <span id="wave-vol-badge" class="wave-badge">40%</span>
           </div>
-          <input id="wave-volume" class="wave-range" type="range" min="0" max="100" step="1" value="35" aria-label="Volume">
+          <input id="wave-volume" class="wave-range" type="range" min="0" max="100" step="1" value="40" aria-label="Master volume">
         </div>
 
-        <p class="wave-hint">40 Hz to 4 kHz. The − and + buttons step one semitone.</p>
+        <p class="wave-hint">4 independent voices, mixed through one master gain. −/+ steps one semitone per voice; the fader sets each mix level; 40 Hz to 4 kHz.</p>
       </div>
 
       <div class="wave-controls">

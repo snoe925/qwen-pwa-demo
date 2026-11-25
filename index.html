@@ -69,6 +69,23 @@
       <button id="play-tetris" class="btn primary" type="button">Tetris</button>
     </section>
 
+
+    <section class="tool-launch card">
+      <div>
+        <h2>Dino Runner</h2>
+        <p>Run, jump, and dodge the obstacles.</p>
+      </div>
+      <button id="play-dino" class="btn primary" type="button">Run</button>
+    </section>
+
+    <section class="tool-launch card">
+      <div>
+        <h2>Dodge</h2>
+        <p>Swipe the shield away from the falling mines.</p>
+      </div>
+      <button id="play-dodge" class="btn primary" type="button">Dodge</button>
+    </section>
+
     <section class="composer card">
       <textarea id="note-input" placeholder="Jot something down…" rows="3" maxlength="2000"></textarea>
       <div class="composer-footer">
@@ -312,11 +329,54 @@
     </div>
   </div>
 
+
+  <div id="dino-overlay" class="game-overlay hidden" role="dialog" aria-modal="true" aria-label="Dino Runner">
+    <div class="game-shell">
+      <div class="game-hud">
+        <span class="hud-item"><span class="hud-label">Distance</span><span id="dino-score" class="hud-value">0 m</span></span>
+        <span class="hud-item"><span class="hud-label">Speed</span><span id="dino-speed" class="hud-value">1.0x</span></span>
+        <span class="hud-item"><span class="hud-label">Best</span><span id="dino-best" class="hud-value">0 m</span></span>
+        <button id="dino-exit" class="game-exit" type="button" aria-label="Exit Dino Runner">×</button>
+      </div>
+
+      <div id="dino-stage" class="game-stage">
+        <canvas id="dino-canvas" aria-label="Dino Runner playfield"></canvas>
+        <div id="dino-message" class="game-message">
+          <h2 id="dino-title">Dino Runner</h2>
+          <p id="dino-subtitle">Tap or press Space to jump.</p>
+          <button id="dino-action" class="btn primary" type="button">Start</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="dodge-overlay" class="game-overlay hidden" role="dialog" aria-modal="true" aria-label="Dodge">
+    <div class="game-shell">
+      <div class="game-hud">
+        <span class="hud-item"><span class="hud-label">Score</span><span id="dodge-score" class="hud-value">0</span></span>
+        <span class="hud-item"><span class="hud-label">Lives</span><span id="dodge-lives" class="hud-value">3</span></span>
+        <span class="hud-item"><span class="hud-label">Best</span><span id="dodge-best" class="hud-value">0</span></span>
+        <button id="dodge-exit" class="game-exit" type="button" aria-label="Exit Dodge">×</button>
+      </div>
+
+      <div id="dodge-stage" class="game-stage">
+        <canvas id="dodge-canvas" aria-label="Dodge playfield"></canvas>
+        <div id="dodge-message" class="game-message">
+          <h2 id="dodge-title">Dodge</h2>
+          <p id="dodge-subtitle">Swipe to move the shield.</p>
+          <button id="dodge-action" class="btn primary" type="button">Start</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script src="app.js"></script>
   <script src="game.js"></script>
   <script src="wave.js"></script>
   <script src="2048.js"></script>
   <script src="memory.js"></script>
   <script src="tetris.js"></script>
+  <script src="dino.js"></script>
+  <script src="dodge.js"></script>
 </body>
 </html>

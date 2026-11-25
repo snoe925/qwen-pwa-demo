@@ -1,4 +1,4 @@
-const VERSION = 'v9';
+const VERSION = 'v10';
 const CACHE_NAME = `quicknotes-${VERSION}`;
 
 const BASE = new URL('./', self.location);
@@ -12,6 +12,8 @@ const APP_SHELL = [
   '2048.js',
   'memory.js',
   'tetris.js',
+  'dino.js',
+  'dodge.js',
   'manifest.webmanifest',
   'offline.html',
   'icons/icon-192.png',

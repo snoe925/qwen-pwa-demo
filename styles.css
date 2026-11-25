@@ -906,3 +906,27 @@ body.wave-open {
   .cell.tile--merged { animation: tileMerge 0.3s ease-out; }
   .board-grid.has-motion { animation: boardSweep 0.42s ease-out; }
 }
+
+/* --- Dino Runner --- */
+
+#dino-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  touch-action: none;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* --- Dodge --- */
+
+#dodge-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  touch-action: none;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}

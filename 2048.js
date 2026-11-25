@@ -24,7 +24,8 @@
     board: Array.from({ length: 4 }, () => Array(4).fill(0)),
     score: 0,
     best: 0,
-    won: false
+    won: false,
+    anim: { merged: [], spawned: null }
   };
 
   function readBest() {
@@ -60,10 +61,11 @@
 
   function spawnTile(board) {
     const cells = emptyCells(board);
-    if (!cells.length) return false;
+    if (!cells.length) return null;
     const [y, x] = cells[Math.floor(Math.random() * cells.length)];
-    board[y][x] = Math.random() < 0.9 ? 2 : 4;
-    return true;
+    const value = Math.random() < 0.9 ? 2 : 4;
+    board[y][x] = value;
+    return { y, x, value };
   }
 
   function getLine(i, dx, dy) {
@@ -77,6 +79,7 @@
 
   function moveBoard(board, dx, dy) {
     const next = emptyBoard();
+    const mergeCells = [];
     let gained = 0;
     let moved = false;
 
@@ -89,6 +92,7 @@
       for (let i = 0; i < values.length; i++) {
         if (values[i] === values[i + 1]) {
           const nv = values[i] * 2;
+          mergeCells.push(line[merged.length]);
           merged.push(nv);
           gained += nv;
           i++;
@@ -103,8 +107,8 @@
       });
     }
 
-    if (!moved) return { board: next, gained: 0, moved: false };
-    return { board: next, gained, moved: true };
+    if (!moved) return { board: next, gained: 0, moved: false, mergeCells: [] };
+    return { board: next, gained, moved: true, mergeCells };
   }
 
   function boardHasMerge(board) {
@@ -124,6 +128,8 @@
   }
 
   function render() {
+    const mergedSet = new Set(G.anim.merged.map(([y, x]) => y + ',' + x));
+    const spawned = G.anim.spawned;
     boardEl.innerHTML = '';
     for (let y = 0; y < GRID; y++) {
       for (let x = 0; x < GRID; x++) {
@@ -134,10 +140,14 @@
           cell.classList.add('tile');
           cell.classList.add('tile--' + value);
           cell.textContent = String(value);
+          if (mergedSet.has(y + ',' + x)) cell.classList.add('tile--merged');
+          else if (spawned && spawned.y === y && spawned.x === x) cell.classList.add('tile--fresh');
         }
         boardEl.append(cell);
       }
     }
+    G.anim.merged = [];
+    G.anim.spawned = null;
     updateHud();
   }
 
@@ -153,6 +163,7 @@
   }
 
   function startGame() {
+    boardEl.classList.remove('has-motion');
     G.board = emptyBoard();
     G.score = 0;
     G.won = false;
@@ -182,8 +193,12 @@
       writeBest(G.best);
     }
 
-    spawnTile(G.board);
+    const spawned = spawnTile(G.board);
+    G.anim = { merged: result.mergeCells || [], spawned };
     render();
+    boardEl.classList.remove('has-motion');
+    void boardEl.offsetWidth;
+    boardEl.classList.add('has-motion');
 
     const hasWinTile = G.board.some((row) => row.some((v) => v >= WIN_VALUE));
     if (hasWinTile && !G.won) {
@@ -200,6 +215,7 @@
   }
 
   function openPanel() {
+    boardEl.classList.remove('has-motion');
     overlay.classList.remove('hidden');
     document.body.classList.add('game-open');
     G.mode = 'ready';

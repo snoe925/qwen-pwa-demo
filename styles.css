@@ -863,6 +863,18 @@ body.wave-open {
   gap: 8px;
 }
 
+.tetris-controls button,
+.game-controls button,
+.game-hud button,
+.board-grid button,
+.memory-grid button {
+  touch-action: manipulation;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+
 @media (orientation: landscape) and (max-height: 560px) {
   .board-grid,
   .memory-grid {

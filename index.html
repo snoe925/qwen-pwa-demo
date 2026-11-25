@@ -44,6 +44,31 @@
       <button id="open-wave" class="btn primary" type="button">Wave</button>
     </section>
 
+
+    <section class="tool-launch card">
+      <div>
+        <h2>2048</h2>
+        <p>Slide the tiles, merge them, reach 2048.</p>
+      </div>
+      <button id="open-2048" class="btn primary" type="button">2048</button>
+    </section>
+
+    <section class="tool-launch card">
+      <div>
+        <h2>Memory</h2>
+        <p>Flip the cards and clear the board.</p>
+      </div>
+      <button id="open-memory" class="btn primary" type="button">Memory</button>
+    </section>
+
+    <section class="tool-launch card">
+      <div>
+        <h2>Tetris</h2>
+        <p>Stack the tetrominoes, clear lines, climb the levels.</p>
+      </div>
+      <button id="play-tetris" class="btn primary" type="button">Tetris</button>
+    </section>
+
     <section class="composer card">
       <textarea id="note-input" placeholder="Jot something down…" rows="3" maxlength="2000"></textarea>
       <div class="composer-footer">
@@ -209,8 +234,89 @@
     </div>
   </div>
 
+
+  <div id="2048-overlay" class="game-overlay hidden" role="dialog" aria-modal="true" aria-label="2048 game">
+    <div class="game-shell">
+      <div class="game-hud">
+        <span class="hud-item"><span class="hud-label">Score</span><span id="2048-score" class="hud-value">0</span></span>
+        <span class="hud-item"><span class="hud-label">Best</span><span id="2048-best" class="hud-value">0</span></span>
+        <button id="2048-exit" class="game-exit" type="button" aria-label="Exit 2048">×</button>
+      </div>
+
+      <div class="game-stage board-stage">
+        <div id="2048-board" class="board-grid" role="grid" aria-label="2048 board"></div>
+        <div id="2048-message" class="game-message">
+          <h2 id="2048-title">2048</h2>
+          <p id="2048-subtitle">Swipe or use arrow keys to slide the tiles.</p>
+          <button id="2048-action" class="btn primary" type="button">Start</button>
+        </div>
+      </div>
+
+      <div class="game-controls">
+        <button id="2048-new" class="btn" type="button">New game</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="memory-overlay" class="game-overlay hidden" role="dialog" aria-modal="true" aria-label="Memory Match">
+    <div class="game-shell">
+      <div class="game-hud">
+        <span class="hud-item"><span class="hud-label">Moves</span><span id="memory-moves" class="hud-value">0</span></span>
+        <span class="hud-item"><span class="hud-label">Matched</span><span id="memory-matched" class="hud-value">0 / 8</span></span>
+        <span class="hud-item"><span class="hud-label">Best</span><span id="memory-best" class="hud-value">0</span></span>
+        <button id="memory-exit" class="game-exit" type="button" aria-label="Exit Memory">×</button>
+      </div>
+
+      <div class="game-stage memory-stage">
+        <div id="memory-grid" class="memory-grid" role="grid" aria-label="Memory board"></div>
+        <div id="memory-message" class="game-message">
+          <h2 id="memory-title">Memory</h2>
+          <p id="memory-subtitle">Flip two cards to find a matching pair.</p>
+          <button id="memory-action" class="btn primary" type="button">Start</button>
+        </div>
+      </div>
+
+      <div class="game-controls">
+        <button id="memory-new" class="btn" type="button">New game</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="tetris-overlay" class="game-overlay hidden" role="dialog" aria-modal="true" aria-label="Tetris">
+    <div class="game-shell">
+      <div class="game-hud">
+        <span class="hud-item"><span class="hud-label">Score</span><span id="tetris-score" class="hud-value">0</span></span>
+        <span class="hud-item"><span class="hud-label">Lines</span><span id="tetris-lines" class="hud-value">0</span></span>
+        <span class="hud-item"><span class="hud-label">Level</span><span id="tetris-level" class="hud-value">1</span></span>
+        <span class="hud-item"><span class="hud-label">Best</span><span id="tetris-best" class="hud-value">0</span></span>
+        <button id="tetris-exit" class="game-exit" type="button" aria-label="Exit Tetris">×</button>
+      </div>
+
+      <div id="tetris-stage" class="game-stage">
+        <canvas id="tetris-canvas" aria-label="Tetris playfield"></canvas>
+        <div id="tetris-message" class="game-message">
+          <h2 id="tetris-message-title">Tetris</h2>
+          <p id="tetris-message-subtitle">Stack the tetrominoes and clear lines.</p>
+          <button id="tetris-message-action" class="btn primary" type="button">Start</button>
+        </div>
+      </div>
+
+      <div class="game-controls tetris-controls">
+        <button id="tetris-left" class="btn" type="button">Left</button>
+        <button id="tetris-rotate" class="btn" type="button">Rotate</button>
+        <button id="tetris-right" class="btn" type="button">Right</button>
+        <button id="tetris-drop" class="btn" type="button">Drop</button>
+        <button id="tetris-pause" class="btn" type="button">Pause</button>
+        <button id="tetris-restart" class="btn" type="button">Restart</button>
+      </div>
+    </div>
+  </div>
+
   <script src="app.js"></script>
   <script src="game.js"></script>
   <script src="wave.js"></script>
+  <script src="2048.js"></script>
+  <script src="memory.js"></script>
+  <script src="tetris.js"></script>
 </body>
 </html>

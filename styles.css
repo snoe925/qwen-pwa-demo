@@ -732,3 +732,134 @@ body.wave-open {
 .wave-voice-vol {
   height: 30px;
 }
+
+/* --- 2048 --- */
+
+.board-stage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+}
+
+.board-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  width: min(100%, 460px);
+  aspect-ratio: 1;
+  padding: 10px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  touch-action: none;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.cell {
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  background: rgba(148, 163, 184, 0.07);
+  font-weight: 700;
+  font-size: clamp(1rem, 4vmin, 1.6rem);
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+}
+
+.cell.tile--2 { background: #475569; }
+.cell.tile--4 { background: #3f4b63; }
+.cell.tile--8 { background: #6366f1; }
+.cell.tile--16 { background: #818cf8; }
+.cell.tile--32 { background: #8b5cf6; }
+.cell.tile--64 { background: #a855f7; }
+.cell.tile--128 { background: #d946ef; }
+.cell.tile--256 { background: #f472b6; }
+.cell.tile--512 { background: #fb7185; }
+.cell.tile--1024 { background: #f97316; }
+.cell.tile--2048 { background: #fbbf24; color: #1f2937; box-shadow: 0 0 22px rgba(251, 191, 36, 0.45); }
+.cell.tile--4096,
+.cell.tile--8192,
+.cell.tile--16384,
+.cell.tile--32768,
+.cell.tile--65536,
+.cell.tile--131072 { background: #fde68a; color: #1f2937; box-shadow: 0 0 22px rgba(253, 230, 138, 0.5); }
+
+/* --- Memory --- */
+
+.memory-stage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+}
+
+.memory-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  width: min(100%, 460px);
+}
+
+.memory-card {
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: linear-gradient(135deg, #1e293b, #273549);
+  color: var(--text-dim);
+  font-size: 1.15rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.08s ease, background 0.12s ease, border-color 0.12s ease, color 0.12s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.memory-card:active {
+  transform: scale(0.95);
+}
+
+.memory-card.is-flipped {
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  border-color: transparent;
+  color: #fff;
+  box-shadow: 0 6px 16px rgba(99, 102, 241, 0.35);
+}
+
+.memory-card.is-matched {
+  background: rgba(52, 211, 153, 0.14);
+  border-color: rgba(52, 211, 153, 0.5);
+  color: var(--ok);
+  cursor: default;
+}
+
+/* --- Tetris --- */
+
+#tetris-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  touch-action: none;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.tetris-controls {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+@media (orientation: landscape) and (max-height: 560px) {
+  .board-grid,
+  .memory-grid {
+    width: min(74vw, 400px);
+  }
+}

@@ -75,9 +75,9 @@
   }
 
   function updateHud() {
-    scoreEl.textContent = G.distance + ' m';
+    scoreEl.textContent = Math.floor(G.distance) + ' m';
     speedEl.textContent = (G.speed / 140).toFixed(1) + 'x';
-    bestEl.textContent = G.best + ' m';
+    bestEl.textContent = Math.floor(G.best) + ' m';
   }
 
   function resize() {
@@ -162,7 +162,7 @@
 
     if (G.mode === 'playing') {
       G.time += dt;
-      G.distance = Math.floor(G.distance + (G.speed * dt) / 50);
+      G.distance += (G.speed * dt) / 50;
       G.speed = Math.min(140 + G.time * 7, 460);
 
       const g = 2400;
@@ -200,12 +200,12 @@
   function loseLife() {
     stopLoop();
     G.mode = 'over';
-    if (G.distance > G.best) {
-      G.best = G.distance;
+    if (Math.floor(G.distance) > G.best) {
+      G.best = Math.floor(G.distance);
       writeBest(G.best);
     }
     updateHud();
-    showMessage('Game over', 'You ran ' + G.distance + ' m. Best ' + G.best + ' m.', 'Play again');
+    showMessage('Game over', 'You ran ' + Math.floor(G.distance) + ' m. Best ' + Math.floor(G.best) + ' m.', 'Play again');
   }
 
   function startLoop() {

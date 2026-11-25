@@ -318,6 +318,13 @@
     function (ev) {
       ev.preventDefault();
       pointerActive = true;
+      if (canvas.setPointerCapture) {
+        try {
+          canvas.setPointerCapture(ev.pointerId);
+        } catch (err) {
+          /* capture is a nicety; dragging still works without it */
+        }
+      }
       setShieldTarget(ev.clientX);
     },
     { passive: false }

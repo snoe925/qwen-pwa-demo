@@ -1,4 +1,4 @@
-const VERSION = 'v12';
+const VERSION = 'v13';
 const CACHE_NAME = `quicknotes-${VERSION}`;
 
 const BASE = new URL('./', self.location);

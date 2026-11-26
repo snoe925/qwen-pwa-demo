@@ -909,18 +909,24 @@ body.wave-open {
 
 /* --- Dino Runner --- */
 
-/* The playfield is a landscape 16:9 stage, centred in whatever space is left. */
-#dino-overlay .game-shell {
-  max-width: 920px;
-  justify-content: center;
+/* A full-screen run: the stage covers the whole display and the world is
+   drawn to fit it, so there is no letterboxed strip. */
+.dino-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background: #070d18;
+  overflow: hidden;
+  overscroll-behavior: contain;
+  touch-action: none;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
-#dino-stage {
-  flex: 0 0 auto;
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  margin: auto;
-  background: #08101d;
+.dino-stage {
+  position: absolute;
+  inset: 0;
 }
 
 #dino-canvas {
@@ -928,39 +934,184 @@ body.wave-open {
   width: 100%;
   height: 100%;
   touch-action: none;
+}
+
+.dino-top {
+  position: absolute;
+  top: calc(env(safe-area-inset-top) + 10px);
+  left: calc(env(safe-area-inset-left) + 10px);
+  right: calc(env(safe-area-inset-right) + 10px);
+  z-index: 6;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+  pointer-events: none;
+}
+
+.dino-menu {
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  padding: 0;
+  border: 1px solid rgba(148, 163, 184, 0.26);
+  border-radius: 14px;
+  background: rgba(2, 6, 23, 0.55);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: #c7d2fe;
+  cursor: pointer;
+  transition: transform 0.06s ease;
+  touch-action: manipulation;
+}
+
+.dino-menu:active {
+  transform: scale(0.94);
+}
+
+.dino-menu-icon {
+  position: relative;
+  display: block;
+  width: 16px;
+  height: 14px;
+}
+
+.dino-menu-icon::before,
+.dino-menu-icon::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 5px;
+  border-radius: 2px;
+  background: currentColor;
+}
+
+.dino-menu-icon::before {
+  left: 0;
+}
+
+.dino-menu-icon::after {
+  right: 0;
+}
+
+.dino-hud {
+  display: flex;
+  gap: 12px;
+  padding: 8px 12px;
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  border-radius: 14px;
+  background: rgba(2, 6, 23, 0.45);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  pointer-events: none;
+}
+
+.dino-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 42px;
+}
+
+.dino-stat-label {
+  font-size: 0.55rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-dim);
+}
+
+.dino-stat-value {
+  font-size: 0.85rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--text);
+}
+
+.dino-controls {
+  position: absolute;
+  top: calc(env(safe-area-inset-top) + 64px);
+  left: calc(env(safe-area-inset-left) + 10px);
+  z-index: 7;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 168px;
+  padding: 10px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: rgba(2, 6, 23, 0.94);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
+}
+
+.dino-controls .btn {
+  padding: 10px 14px;
+  text-align: left;
+}
+
+.dino-controls .btn,
+.dino-message .btn {
+  touch-action: manipulation;
   -webkit-user-select: none;
   user-select: none;
   -webkit-tap-highlight-color: transparent;
 }
 
-#dino-overlay .game-message {
-  padding: 16px;
-  gap: 8px;
+.dino-controls .btn:disabled {
+  opacity: 0.4;
 }
 
-#dino-overlay .game-message h2 {
-  font-size: 1.15rem;
+.dino-message {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: calc(env(safe-area-inset-top) + 74px) 24px calc(env(safe-area-inset-bottom) + 24px);
+  text-align: center;
+  background: radial-gradient(120% 90% at 50% 45%, rgba(2, 6, 23, 0.76), rgba(2, 6, 23, 0.93));
 }
 
-#dino-overlay .game-message p {
-  font-size: 0.8rem;
+.dino-message h2 {
+  font-size: 1.5rem;
+  letter-spacing: -0.02em;
+}
+
+.dino-message p {
+  max-width: 32ch;
+  font-size: 0.88rem;
+  line-height: 1.5;
+  color: var(--text-dim);
+}
+
+.dino-message .btn {
+  min-width: 148px;
+  margin-top: 6px;
+  padding: 12px 20px;
 }
 
 @media (orientation: landscape) and (max-height: 560px) {
-  #dino-overlay .game-hud {
-    gap: 12px;
+  .dino-message {
+    padding: 56px 24px 18px;
+    gap: 8px;
   }
 
-  #dino-overlay .hud-value {
-    font-size: 0.85rem;
+  .dino-message h2 {
+    font-size: 1.2rem;
   }
 
-  #dino-overlay .game-message {
-    padding: 10px;
-    gap: 6px;
+  .dino-message p {
+    font-size: 0.8rem;
   }
 
-  #dino-overlay .game-message h2 {
-    font-size: 1rem;
+  .dino-stat-value {
+    font-size: 0.8rem;
   }
 }

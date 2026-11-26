@@ -321,22 +321,31 @@
   </div>
 
 
-  <div id="dino-overlay" class="game-overlay hidden" role="dialog" aria-modal="true" aria-label="Dino Runner">
-    <div class="game-shell">
-      <div class="game-hud">
-        <span class="hud-item"><span class="hud-label">Distance</span><span id="dino-score" class="hud-value">0 m</span></span>
-        <span class="hud-item"><span class="hud-label">Speed</span><span id="dino-speed" class="hud-value">1.0x</span></span>
-        <span class="hud-item"><span class="hud-label">Best</span><span id="dino-best" class="hud-value">0 m</span></span>
-        <button id="dino-exit" class="game-exit" type="button" aria-label="Exit Dino Runner">×</button>
+  <div id="dino-overlay" class="dino-overlay hidden" role="dialog" aria-modal="true" aria-label="Dino Runner">
+    <div id="dino-stage" class="dino-stage">
+      <canvas id="dino-canvas" aria-label="Dino Runner playfield"></canvas>
+
+      <div class="dino-top">
+        <button id="dino-menu" class="dino-menu" type="button" aria-label="Game controls" aria-haspopup="menu" aria-expanded="false">
+          <span class="dino-menu-icon" aria-hidden="true"></span>
+        </button>
+        <div class="dino-hud">
+          <span class="dino-stat"><span class="dino-stat-label">Distance</span><span id="dino-score" class="dino-stat-value">0 m</span></span>
+          <span class="dino-stat"><span class="dino-stat-label">Speed</span><span id="dino-speed" class="dino-stat-value">1.0x</span></span>
+          <span class="dino-stat"><span class="dino-stat-label">Best</span><span id="dino-best" class="dino-stat-value">0 m</span></span>
+        </div>
       </div>
 
-      <div id="dino-stage" class="game-stage">
-        <canvas id="dino-canvas" aria-label="Dino Runner playfield"></canvas>
-        <div id="dino-message" class="game-message">
-          <h2 id="dino-title">Dino Runner</h2>
-          <p id="dino-subtitle">Tap or press Space to jump.</p>
-          <button id="dino-action" class="btn primary" type="button">Start</button>
-        </div>
+      <div id="dino-controls" class="dino-controls hidden" role="menu" aria-label="Dino Runner controls">
+        <button id="dino-pause" class="btn" type="button" role="menuitem">Pause</button>
+        <button id="dino-restart" class="btn" type="button" role="menuitem">Restart</button>
+        <button id="dino-exit" class="btn" type="button" role="menuitem">Exit</button>
+      </div>
+
+      <div id="dino-message" class="dino-message">
+        <h2 id="dino-title">Dino Runner</h2>
+        <p id="dino-subtitle">Tap anywhere to jump. The pause button opens the controls.</p>
+        <button id="dino-action" class="btn primary" type="button">Start</button>
       </div>
     </div>
   </div>
